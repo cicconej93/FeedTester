@@ -101,6 +101,7 @@ $(function() {
          */
 
         //call the loadFeed function and let it complete before running test
+        //done is passed as a callback function here
         beforeEach(function(done){
             loadFeed(0, done);
            
@@ -126,11 +127,13 @@ $(function() {
          */
         beforeEach(done => {
             //get first feed loaded, store URL feed is pulling from
+            //tried to incorporate arrow functions here as practice.
             loadFeed(0, () => {
                 firstFeed = feed.innerText;
                 console.log(firstFeed);
                 
                 //get second feed loaded, store URL feed is pulling from
+                //each arrow function is a callback function in the loadFeed function
                 loadFeed(1, () => {
                     secondFeed = feed.innerText;
                     done();
@@ -139,6 +142,7 @@ $(function() {
     
         });
 
+        //test to check that feeds are changing once selected
         it('loads a new feed and pulls from different feed URL', function() {
             expect(firstFeed).not.toEqual(secondFeed);
         });
