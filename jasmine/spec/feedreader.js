@@ -91,6 +91,7 @@ $(function() {
     });
 
     /* TODO: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function(){
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -99,10 +100,53 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+        //call the loadFeed function and let it complete before running test
+        beforeEach(function(done){
+            loadFeed(0, done);
+           
+        });
 
+        it('should exist and contain at least 1 entry', function(){
+            let entryLink = document.querySelector('.entry-link');
+            
+            expect(entryLink).toBeDefined();
+            expect(entryLink.childElementCount).toBeGreaterThan(0);
+           
+        });
+
+    });
+
+    /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function(){
+        const feed = document.querySelector('.feed');
+        let firstFeed, secondFeed;
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        beforeEach(done => {
+            //get first feed loaded, store URL feed is pulling from
+            loadFeed(0, () => {
+                firstFeed = feed.innerText;
+                console.log(firstFeed);
+                
+                //get second feed loaded, store URL feed is pulling from
+                loadFeed(1, () => {
+                    secondFeed = feed.innerText;
+                    done();
+                });
+            });
+    
+        });
+
+        it('loads a new feed and pulls from different feed URL', function() {
+            expect(firstFeed).not.toEqual(secondFeed);
+        });
+    
+    });
+
+    
+    
 }());
+
+
