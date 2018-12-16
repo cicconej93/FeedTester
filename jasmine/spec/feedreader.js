@@ -9,7 +9,7 @@
  * to ensure they don't run until the DOM is ready.
  */
 $(function() {
-    /* This is our first test suite - a test suite just contains
+  /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
     * feeds definitions, the allFeeds variable in our application.
     */
@@ -32,7 +32,7 @@ $(function() {
          * and that the URL is not empty.
          */
         it('have a non-empty URL', function(){
-            allFeeds.forEach(feed => {
+            allFeeds.forEach ( feed => { 
                 expect(feed.url).toBeDefined();
                 expect(feed.url.length).not.toBe(0);
             });
@@ -55,18 +55,40 @@ $(function() {
 
 
     /* TODO: Write a new test suite named "The menu" */
+    describe('The menu', function(){
+        let menu;
 
+        beforeEach(function(){
+            menu = document.querySelector("body");
+        });
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
 
+         it('is hidden by default', function(){
+             expect(menu.classList.contains("menu-hidden")).toBe(true);
+         });
+
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+
+        it('is visible when icon clicked, if previously not visible', function(){
+            //select our menuIcon
+            let menuIcon = document.querySelector(".menu-icon-link");
+
+            //when the menu is currently not visible
+            menuIcon.click();
+            expect(menu.classList.contains("menu-hidden")).not.toBe(true);
+            //when menu is currently visible
+            menuIcon.click();
+            expect(menu.classList.contains("menu-hidden")).toBe(true);
+        });
+    });
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
