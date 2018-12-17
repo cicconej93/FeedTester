@@ -27,12 +27,8 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
-         */
         it('have a non-empty URL', () => {
-            allFeeds.forEach ( feed => { 
+            allFeeds.forEach((feed) => { 
                 expect(feed.url).toBeDefined();
                 expect(feed.url.length).not.toBe(0);
             });
@@ -43,7 +39,7 @@ $(function() {
         * a name is defined, and is not empty
         */
         it('have a non-empty name', () => {
-            allFeeds.forEach(feed => {
+            allFeeds.forEach((feed) => {
                 expect(feed.name).toBeDefined();
                 expect(feed.name.length).not.toBe(0);
             });
@@ -55,38 +51,39 @@ $(function() {
 
     //Test suite for the menu
     describe('The menu', () => {
+        /**
+        *  This test ensures that the menu is hidden by default
+        */
+
         let menu;
 
         beforeEach(() => {
             menu = document.querySelector("body");
         });
-         /**
-          *  This test ensures that the menu is hidden by default
-          */
-         it('is hidden by default', () => {
-             expect(menu.classList.contains("menu-hidden")).toBe(true);
-         });
 
-         /**
-          * Test to ensure menu visibility changes when icon is clicked.
-          */
-
-         it('is visible when icon clicked, if previously not visible', () => {
-            //select our menuIcon
-            let menuIcon = document.querySelector(".menu-icon-link");
-
-            //when the menu is currently not visible
-            menuIcon.click();
-            expect(menu.classList.contains("menu-hidden")).not.toBe(true);
-            //when menu is currently visible
-            menuIcon.click();
+        it('is hidden by default', () => {
             expect(menu.classList.contains("menu-hidden")).toBe(true);
+        });
+
+        /**
+        * Test to ensure menu visibility changes when icon is clicked.
+        */
+
+        it('is visible when icon clicked, if previously not visible', () => {
+           //select our menuIcon
+           let menuIcon = document.querySelector(".menu-icon-link");
+
+           //when the menu is currently not visible
+           menuIcon.click();
+           expect(menu.classList.contains("menu-hidden")).not.toBe(true);
+           //when menu is currently visible
+           menuIcon.click();
+           expect(menu.classList.contains("menu-hidden")).toBe(true);
         });
     });
 
     /* Test suite for the Initial Entries */
     describe('Initial Entries', () => {
-
         /**
         * Tests to ensure there is at least a single entry
         * when the loadFeed function is called.
@@ -95,15 +92,14 @@ $(function() {
         //call the loadFeed function and let it complete before running test
         //done is passed as a callback function here
         beforeEach((done) => {
-            loadFeed(0, done);
-           
+            loadFeed(0, done);          
         });
 
         it('should exist and contain at least 1 entry', () => {
-            let entryLink = document.querySelector('.entry-link');
-            
-            expect(entryLink).toBeDefined();
-            expect(entryLink.childElementCount).toBeGreaterThan(0);
+            let entry = document.querySelectorAll('.feed .entry');
+           
+            expect(entry).toBeDefined();
+            expect(entry.length).toBeGreaterThan(0);
            
         });
 
@@ -111,13 +107,14 @@ $(function() {
 
     /* Test for the selecting a new feed*/
     describe('New Feed Selection', () => {
-        const feed = document.querySelector('.feed');
-        let firstFeed, secondFeed;
-
         /**
          * Tests that ensures a new feed is loaded, i.e. the content
          * actually changes once loadFeed function is called.
          */
+
+        const feed = document.querySelector('.feed');
+        let firstFeed, secondFeed;
+
         beforeEach( (done) => {
             //get first feed loaded, store URL feed is pulling from
             //tried to incorporate arrow functions here as practice.
